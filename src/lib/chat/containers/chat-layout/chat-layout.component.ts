@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ChatService } from 'src/lib/services/chat.service';
 import { Message } from 'src/lib/interfaces/message.interface';
 
@@ -7,11 +7,12 @@ import { Message } from 'src/lib/interfaces/message.interface';
   templateUrl: './chat-layout.component.html',
   styleUrls: ['./chat-layout.component.scss']
 })
-export class ChatLayoutComponent implements OnInit {
+export class ChatLayoutComponent {
   @ViewChild('input', { static: true }) input: any;
   @ViewChild('appMessages', { static: true }) chat: any;
 
   chats: Message[];
+  message: Partial<Message>;
 
   constructor(private chatService: ChatService) {
     this.chatService.loadMessages().subscribe(messages => {
@@ -22,12 +23,15 @@ export class ChatLayoutComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  isSameUser(chat: Message) {
+    return this.chatService.user.uid === chat.uid;
+  }
 
   sendMessage(message: string) {
     if (message.length) {
+      this.message = { message };
       this.chatService
-        .addMessage({ message })
+        .addMessage(this.message)
         .then(() => (this.input.nativeElement.value = ''))
         .catch(err => console.error(err));
     }
