@@ -1,0 +1,17 @@
+<h1 class="title">Chat</h1>
+<hr />
+<div class="app-messages" #appMessages>
+  <div *ngFor="let chat of chats" class="content has-text-right">
+    <span class="tag is-primary">Miguel</span>
+    <p>{{ chat.message }}</p>
+  </div>
+</div>
+
+<input
+  #input
+  class="input"
+  type="text"
+  (keyup.enter)="sendMessage($event.target.value)"
+  placeholder="enter message..."
+  name="message"
+/>
