@@ -13,10 +13,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../../environments/environment';
 
 import * as fromContainers from './containers';
-import { ChatLayoutComponent } from '../chat/containers';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 @NgModule({
-  declarations: [fromContainers.AppComponent, ChatLayoutComponent],
+  declarations: [fromContainers.AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,7 +25,7 @@ import { ChatLayoutComponent } from '../chat/containers';
     AngularFireAuthModule,
     FormsModule
   ],
-  providers: [AngularFirestore],
+  providers: [AngularFirestore, AngularFireAuthGuard],
   bootstrap: [fromContainers.AppComponent]
 })
 export class AppModule {}
