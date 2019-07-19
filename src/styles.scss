@@ -3,7 +3,7 @@
   margin-bottom: 150px;
 }
 
-.puntero {
+.pointer {
   cursor: pointer;
 }
 
@@ -16,14 +16,12 @@
   border-radius: 20px;
 }
 
-.app-mensajes {
+.app-messages {
   overflow-y: scroll;
   height: 270px;
-  /*background:gray;*/
   padding: 5px;
 }
 
-/* Animaciones */
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
