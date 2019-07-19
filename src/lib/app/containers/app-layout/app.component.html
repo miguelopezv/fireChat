@@ -2,9 +2,15 @@
   <div class="columns">
     <div class="column ">
       <h1 class="title">FireChat</h1>
-      <div class="chat-window">
-        <app-chat-layout></app-chat-layout>
+      <div *ngIf="chatService.user.uid" class="column has-text-right">
+        <button
+          (click)="chatService.logout()"
+          class="button is-outlined is-danger"
+        >
+          Logout
+        </button>
       </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
