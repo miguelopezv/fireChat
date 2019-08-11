@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection
@@ -8,6 +8,7 @@ import { auth } from 'firebase/app';
 
 import { Observable } from 'rxjs';
 import { Message } from '../interfaces/message.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,12 @@ export class ChatService {
   items: Observable<Message[]>;
   user: any = {};
 
-  constructor(private afs: AngularFirestore, public afAuth: AngularFireAuth) {
+  constructor(
+    private afs: AngularFirestore,
+    public afAuth: AngularFireAuth,
+    private router: Router,
+    private ngZone: NgZone
+  ) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user.name = user.displayName;
@@ -45,12 +51,15 @@ export class ChatService {
       default:
         break;
     }
-    this.afAuth.auth.signInWithPopup(authProvider);
+    this.afAuth.auth
+      .signInWithPopup(authProvider)
+      .then(() => this.ngZone.run(() => this.router.navigate([''])));
   }
 
   logout() {
     this.user = {};
     this.afAuth.auth.signOut();
+    this.router.navigate(['login']);
   }
 
   loadMessages(): Observable<Message[]> {
